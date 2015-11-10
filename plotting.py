@@ -1,5 +1,6 @@
 '''
 author: Muhammad Numair Mansur (numair.mansur@gmail.com)
+University of Freiburg, Germany
 '''
 import numpy as np
 import matplotlib.pyplot as plt
