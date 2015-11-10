@@ -5,6 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 import sys
+import os
+from matplotlib.backends.backend_pdf import PdfPages
 
 
 def csv_reader(filepath):
@@ -23,7 +25,7 @@ def csv_reader(filepath):
         return result
 
 
-def plotter(dictionary):
+def plotter(dictionary,pdf_file_name):
     '''
     Produces a plot
     '''
@@ -34,6 +36,8 @@ def plotter(dictionary):
     color = ['r', 'y', 'b', 'c', 'k', 'g', 'm', 'violet']
     bars = []
     paper_list_for_legend = []
+    
+
     for rows in dictionary:
         for year in dictionary[rows]:
             if year not in years:
@@ -67,19 +71,35 @@ def plotter(dictionary):
     plt.yticks(np.arange(0, 300, 30))
     plt.legend(bars, paper_list_for_legend, loc='upper left')
     plt.grid()
+
+    pp = PdfPages(pdf_file_name)
+    plt.savefig(pp, format='pdf')
+    pp.close()
+
+
     plt.show()
+    return plt
+
 
 
 def main():
     '''
     The main method
     '''
-    if len(sys.argv) != 2:
-        print('Usage: python plotting.py <.csv file>')
+    if len(sys.argv) == 2:
+    	file_name = sys.argv[1]
+    	dicti = csv_reader(file_name)
+    	plotter(dicti,'plot.pdf')
+    elif len(sys.argv) == 4 and sys.argv[2] == '--pdf':
+    	file_name = sys.argv[1]
+    	pdf_file_name = sys.argv[3]
+    	dicti = csv_reader(file_name)
+    	plotter(dicti,pdf_file_name+'.pdf')
+    else:
+    	print('\n Usage: python plotting.py <.csv file> --pdf [name_of_the_pdf_file] \n ')
         sys.exit()
-    file_name = sys.argv[1]
-    dicti = csv_reader(file_name)
-    plotter(dicti)
+
+
 
 if __name__ == "__main__":
     main()
