@@ -52,27 +52,21 @@ def plotter(dictionary,pdf_file_name):
 
     N = len(years)
     ind = np.arange(N)
-    width = 0.35
+    width = 0.75 # width of the bars
     y_offest = np.array([0.0] * len(years))
     for i in papers:
-        bars.append(
-            plt.bar(
-                ind,
-                papers[i],
-                width,
-                bottom=y_offest,
-                color=color[count]))
+        bars.append(plt.bar(ind,papers[i],width,bottom=y_offest,color=color[count]))
         y_offest = y_offest + papers[i]
         count = count + 1
         paper_list_for_legend.append(i)
 
-    plt.ylabel('Number of Citations')
-    plt.xlabel('Year')
-    plt.xticks(ind + width / 2., years)
-    plt.yticks(np.arange(0, 300, 30))
-    plt.legend(bars, paper_list_for_legend, loc='upper left')
-    plt.grid()
-
+    # plt.ylabel('Number of Citations',fontsize=20, fontstyle= 'italic')
+    # plt.xlabel('Year',fontsize=15, fontstyle= 'italic')
+    plt.xticks(ind + width / 2., years, rotation = 'vertical',fontsize=15)
+    plt.yticks(np.arange(0, 300, 30),fontsize=15) # major issue detected
+    plt.legend(bars, paper_list_for_legend,fontsize=10, loc='upper left')
+    # plt.grid()
+    plt.subplots_adjust(bottom=0.15)
     pp = PdfPages(pdf_file_name)
     plt.savefig(pp, format='pdf')
     pp.close()
