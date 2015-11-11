@@ -8,8 +8,6 @@ import csv
 import sys
 import os
 from matplotlib.backends.backend_pdf import PdfPages
-
-
 def csv_reader(filepath):
     '''
     CSV reader and returns the csv as a dict
@@ -24,8 +22,6 @@ def csv_reader(filepath):
                 papers.append(row['paper'])
             result[row['paper']][row['year']] = int(row['citations'])
         return result
-
-
 def plotter(dictionary,pdf_file_name):
     '''
     Produces a plot
@@ -37,8 +33,6 @@ def plotter(dictionary,pdf_file_name):
     color = ['r', 'y', 'b', 'c', 'k', 'g', 'm', 'violet']
     bars = []
     paper_list_for_legend = []
-    
-
     for rows in dictionary:
         for year in dictionary[rows]:
             if year not in years:
@@ -49,7 +43,6 @@ def plotter(dictionary,pdf_file_name):
     for i in years:
         for j in papers:
             papers[j].append(dictionary[j].setdefault(i, default))
-
     # Find the total number of papers in a year
     total_number_of_papers_in_a_year =[0] * len(years)
     for i in papers:
@@ -57,7 +50,6 @@ def plotter(dictionary,pdf_file_name):
 
     N = len(years)
     ind = np.arange(2,N+2)
-    print ind
     width = 0.75 # width of the bars
     y_offest = np.array([0.0] * len(years))
     for i in papers:
@@ -65,16 +57,12 @@ def plotter(dictionary,pdf_file_name):
         y_offest = y_offest + papers[i]
         count = count + 1
         paper_list_for_legend.append(i)
-
     # plt.ylabel('Number of Citations',fontsize=20, fontstyle= 'italic')
     # plt.xlabel('Year',fontsize=15, fontstyle= 'italic')
-    
     years_for_xticks = years
     if len(years_for_xticks) >= 21:
         for i in range(1,len(years_for_xticks), 2):
             years_for_xticks[i]=' '
-
-
     plt.xticks(ind + width / 2., years_for_xticks, rotation = 75,fontsize=20)
     plt.yticks(np.arange(0, max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/10 , max(total_number_of_papers_in_a_year)/10), fontsize=20)
     plt.legend(bars, paper_list_for_legend,fontsize=12, loc='upper left')
@@ -83,12 +71,8 @@ def plotter(dictionary,pdf_file_name):
     pp = PdfPages(pdf_file_name)
     plt.savefig(pp, format='pdf')
     pp.close()
-
-
     plt.show()
     return plt
-
-
 
 def main():
     '''
