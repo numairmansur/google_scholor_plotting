@@ -50,8 +50,14 @@ def plotter(dictionary,pdf_file_name):
         for j in papers:
             papers[j].append(dictionary[j].setdefault(i, default))
 
+    # Find the total number of papers in a year
+    total_number_of_papers_in_a_year =[0] * len(years)
+    for i in papers:
+        total_number_of_papers_in_a_year = map(sum, zip(papers[i],total_number_of_papers_in_a_year))
+
     N = len(years)
-    ind = np.arange(N)
+    ind = np.arange(2,N+2)
+    print ind
     width = 0.75 # width of the bars
     y_offest = np.array([0.0] * len(years))
     for i in papers:
@@ -62,9 +68,16 @@ def plotter(dictionary,pdf_file_name):
 
     # plt.ylabel('Number of Citations',fontsize=20, fontstyle= 'italic')
     # plt.xlabel('Year',fontsize=15, fontstyle= 'italic')
-    plt.xticks(ind + width / 2., years, rotation = 'vertical',fontsize=15)
-    plt.yticks(np.arange(0, 300, 30),fontsize=15) # major issue detected
-    plt.legend(bars, paper_list_for_legend,fontsize=10, loc='upper left')
+    
+    years_for_xticks = years
+    if len(years_for_xticks) >= 21:
+        for i in range(1,len(years_for_xticks), 2):
+            years_for_xticks[i]=' '
+
+
+    plt.xticks(ind + width / 2., years_for_xticks, rotation = 75,fontsize=20)
+    plt.yticks(np.arange(0, max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/10 , max(total_number_of_papers_in_a_year)/10), fontsize=20)
+    plt.legend(bars, paper_list_for_legend,fontsize=12, loc='upper left')
     # plt.grid()
     plt.subplots_adjust(bottom=0.15)
     pp = PdfPages(pdf_file_name)
