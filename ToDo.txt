@@ -11,3 +11,6 @@
    The y-label should be "# of publications"; this could be taken directly from the 3rd column's header.
 
 5) The colors should be somewhat more subdued and should be discernible when printed in black&white. -Done
+
+
+6) Add more coloring options. 
