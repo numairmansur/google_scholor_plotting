@@ -30,7 +30,7 @@ def plotter(dictionary,pdf_file_name):
     years = []
     papers = {}
     count = 0
-    color = ['r', 'y', 'b', 'c', 'k', 'g', 'm', 'violet']
+    color = ['#d9d8d8', '#b3b2b2', '#7b7979', '#555353', '#434040', '#2e2c2c', '#1a1919', '#0d0c0c']
     bars = []
     paper_list_for_legend = []
     for rows in dictionary:
