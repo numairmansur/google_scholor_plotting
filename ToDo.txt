@@ -1,13 +1,13 @@
-1) Save output as a pdf
+1) Save output as a pdf -Done
 
 2) Please increase the size of the y-label and x-labels to be legible when the image is printed in about 3cm by 5cm.
-   For more years, this will mean not printing every year as an x-label. 
+   For more years, this will mean not printing every year as an x-label.  -Done
 
-3) The bars could be a bit wider.
+3) The bars could be a bit wider. -Done
 
 4) I also tried to use the script to plot the attached data on how many papers I authored per year. 
    For this, "Journal" should be the lowest item in each column, then "Conference", then "Workshop", 
    then "Book chapter". The y-axis should be normalized to be slightly above the year with the highest value. 
    The y-label should be "# of publications"; this could be taken directly from the 3rd column's header.
 
-5) The colors should be somewhat more subdued and should be discernible when printed in black&white.
+5) The colors should be somewhat more subdued and should be discernible when printed in black&white. -Done
