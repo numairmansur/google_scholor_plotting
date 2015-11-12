@@ -13,7 +13,7 @@ def csv_reader(filepath):
     CSV reader and returns the csv as a dict
     '''
     with open(filepath, 'rb') as csvfile:
-        reader = csv.DictReader(open('Data.csv'))
+        reader = csv.DictReader(csvfile)
         result = {}
         papers = []
         for row in reader:
