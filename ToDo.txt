@@ -13,4 +13,4 @@
 5) The colors should be somewhat more subdued and should be discernible when printed in black&white. -Done
 
 
-6) Add more coloring options. 
+6) Add more coloring options.
