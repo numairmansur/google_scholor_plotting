@@ -1,6 +1,9 @@
 '''
-author: Muhammad Numair Mansur (numair.mansur@gmail.com)
-University of Freiburg, Germany
+Author: Muhammad Numair Mansur (numair.mansur@gmail.com)
+
+Research Group on Learning, Optimization,
+and Automated Algorithm Design
+University of Freiburg, Germany.
 '''
 import numpy as np
 import matplotlib.pyplot as plt
