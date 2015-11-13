@@ -109,8 +109,12 @@ def plotter(dictionary,csv_columns, pdf_file_name, color_flag, order):
 			years_for_xticks[i]=' '
 	plt.xticks(ind + width / 2., years_for_xticks, rotation = 75,fontsize=20)
 	plt.yticks(np.arange(0, max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/5 , max(total_number_of_papers_in_a_year)/10), fontsize=19)
+	
+	#Reverse the legend order
+	bars= list(reversed(bars))
+	paper_list_for_legend = list(reversed(paper_list_for_legend))
+
 	plt.legend(bars, paper_list_for_legend,fontsize=12, loc='upper left')
-	# plt.grid()
 	plt.subplots_adjust(bottom=0.20)
 	pp = PdfPages(pdf_file_name)
 	plt.savefig(pp, format='pdf')
