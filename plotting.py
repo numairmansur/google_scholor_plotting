@@ -7,21 +7,35 @@ import matplotlib.pyplot as plt
 import csv
 import sys
 import os
+import argparse
 from matplotlib.backends.backend_pdf import PdfPages
 def csv_reader(filepath):
     '''
     CSV reader and returns the csv as a dict
     '''
+    with open(filepath, 'rb') as csvfile_1:
+    	reader_1 = csv.reader(csvfile_1)
+    	column_list = reader_1.next()
+    if len(column_list) !=3:
+    	print "<CSV FILE FORMAT ERROR> The CSV file should have three columns "
+    	sys.exit()
     with open(filepath, 'rb') as csvfile:
         reader = csv.DictReader(csvfile)
         result = {}
         papers = []
+        
+        first_column = column_list[0]
+        second_column = column_list[1]
+        third_column = column_list[2]
+
         for row in reader:
-            if row['paper'] not in papers:
-                result[row['paper']] = {}
-                papers.append(row['paper'])
-            result[row['paper']][row['year']] = int(row['citations'])
-        return result
+            if row[first_column] not in papers:
+                result[row[first_column]] = {}
+                papers.append(row[first_column])
+            result[row[first_column]][row[second_column]] = int(row[third_column])
+    return result
+
+
 def plotter(dictionary,pdf_file_name):
     '''
     Produces a plot
@@ -43,6 +57,9 @@ def plotter(dictionary,pdf_file_name):
     for i in years:
         for j in papers:
             papers[j].append(dictionary[j].setdefault(i, default))
+    
+
+
     # Find the total number of papers in a year
     total_number_of_papers_in_a_year =[0] * len(years)
     for i in papers:
@@ -59,39 +76,49 @@ def plotter(dictionary,pdf_file_name):
         paper_list_for_legend.append(i)
     # plt.ylabel('Number of Citations',fontsize=20, fontstyle= 'italic')
     # plt.xlabel('Year',fontsize=15, fontstyle= 'italic')
+
+
+
     years_for_xticks = years
     if len(years_for_xticks) >= 21:
         for i in range(1,len(years_for_xticks), 2):
             years_for_xticks[i]=' '
+    print max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/5
     plt.xticks(ind + width / 2., years_for_xticks, rotation = 75,fontsize=20)
-    plt.yticks(np.arange(0, max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/10 , max(total_number_of_papers_in_a_year)/10), fontsize=20)
+    plt.yticks(np.arange(0, max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/5 , max(total_number_of_papers_in_a_year)/10), fontsize=20)
     plt.legend(bars, paper_list_for_legend,fontsize=12, loc='upper left')
     # plt.grid()
     plt.subplots_adjust(bottom=0.15)
     pp = PdfPages(pdf_file_name)
     plt.savefig(pp, format='pdf')
     pp.close()
-    plt.show()
-    return plt
+    # plt.show()
+    print "SHOWING THE PLOT NOW"
 
-def main():
-    '''
-    The main method
-    '''
-    if len(sys.argv) == 2:
-    	file_name = sys.argv[1]
-    	dicti = csv_reader(file_name)
-    	plotter(dicti,'plot.pdf')
-    elif len(sys.argv) == 4 and sys.argv[2] == '--pdf':
-    	file_name = sys.argv[1]
-    	pdf_file_name = sys.argv[3]
-    	dicti = csv_reader(file_name)
-    	plotter(dicti,pdf_file_name+'.pdf')
-    else:
-    	print('\n Usage: python plotting.py <.csv file> --pdf [name_of_the_pdf_file] \n ')
-        sys.exit()
 
+
+def argument_parser():
+	'''
+	Parses the argument of the 
+	'''
+	print "Entered the argument parser"
+	parser = argparse.ArgumentParser()
+	parser.add_argument("filename")
+	parser.add_argument("--pdf", default = "plot", help='Name of the pdf file')
+	parser.add_argument("--order",nargs ='+', default =[])
+	parser.add_argument("--color", default="no")
+	args = parser.parse_args()
+	# Storing the values in the respective variables.
+	filename = args.filename
+	pdf = args.pdf 
+	order = args.order
+	color = args.color
+	dicti = csv_reader(filename)
+	print order
+    print order
+	return 0
 
 
 if __name__ == "__main__":
-    main()
+    argument_parser()
+    

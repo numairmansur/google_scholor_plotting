@@ -8,7 +8,7 @@
 4) I also tried to use the script to plot the attached data on how many papers I authored per year. 
    For this, "Journal" should be the lowest item in each column, then "Conference", then "Workshop", 
    then "Book chapter". The y-axis should be normalized to be slightly above the year with the highest value. 
-   The y-label should be "# of publications"; this could be taken directly from the 3rd column's header.
+   The y-label should be "# of publications"; this could be taken directly from the 3rd column's header. - Almost done
 
 5) The colors should be somewhat more subdued and should be discernible when printed in black&white. -Done
 
