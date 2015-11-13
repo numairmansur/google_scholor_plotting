@@ -117,7 +117,7 @@ def plotter(dictionary,csv_columns, pdf_file_name, color_flag, order):
 
 
 
-def argument_parser():
+def main():
 	'''
 	Parses the argument of the 
 	'''
@@ -148,4 +148,4 @@ def argument_parser():
 		print "\n"
 
 if __name__ == "__main__":
-	argument_parser()
+	main()
