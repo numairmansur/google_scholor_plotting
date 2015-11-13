@@ -21,6 +21,8 @@ def csv_column_reader(filepath):
 	return column_list
 
 
+
+
 def csv_reader(filepath):
 	'''
 	CSV reader and returns the csv as a dict
@@ -46,7 +48,7 @@ def csv_reader(filepath):
 
 
 
-def plotter(dictionary,pdf_file_name, color_flag):
+def plotter(dictionary,csv_columns, pdf_file_name, color_flag, order):
 	'''
 	Produces a plot
 	'''
@@ -71,8 +73,6 @@ def plotter(dictionary,pdf_file_name, color_flag):
 		papers[rows] = []
 	years = sorted(years)
 
-	print papers
-
 	for i in years:
 		for j in papers:
 			papers[j].append(dictionary[j].setdefault(i, default))
@@ -88,13 +88,15 @@ def plotter(dictionary,pdf_file_name, color_flag):
 	ind = np.arange(2,N+2)
 	width = 0.75 # width of the bars
 	y_offest = np.array([0.0] * len(years))
-	for i in papers:
+	for i in order:
 		bars.append(plt.bar(ind,papers[i],width,bottom=y_offest,color=color[count]))
 		y_offest = y_offest + papers[i]
 		count = count + 1
 		paper_list_for_legend.append(i)
-	# plt.ylabel('Number of Citations',fontsize=20, fontstyle= 'italic')
-	# plt.xlabel('Year',fontsize=15, fontstyle= 'italic')
+	
+	# X and Y Labels
+	plt.ylabel(csv_columns[2],fontsize=20, fontstyle= 'italic')
+	plt.xlabel(csv_columns[1] ,fontsize=17, fontstyle= 'italic')
 
 
 
@@ -102,17 +104,16 @@ def plotter(dictionary,pdf_file_name, color_flag):
 	if len(years_for_xticks) >= 21:
 		for i in range(1,len(years_for_xticks), 2):
 			years_for_xticks[i]=' '
-	print max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/5
 	plt.xticks(ind + width / 2., years_for_xticks, rotation = 75,fontsize=20)
-	plt.yticks(np.arange(0, max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/5 , max(total_number_of_papers_in_a_year)/10), fontsize=20)
+	plt.yticks(np.arange(0, max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/5 , max(total_number_of_papers_in_a_year)/10), fontsize=19)
 	plt.legend(bars, paper_list_for_legend,fontsize=12, loc='upper left')
 	# plt.grid()
-	plt.subplots_adjust(bottom=0.15)
+	plt.subplots_adjust(bottom=0.20)
 	pp = PdfPages(pdf_file_name)
 	plt.savefig(pp, format='pdf')
 	pp.close()
 	plt.show()
-	print "SHOWING THE PLOT NOW"
+
 
 
 
@@ -120,28 +121,31 @@ def argument_parser():
 	'''
 	Parses the argument of the 
 	'''
-	print "Entered the argument parser"
 	parser = argparse.ArgumentParser()
 	parser.add_argument("filepath")
 	parser.add_argument("--pdf", default = "plot", help='Name of the pdf file')
-	parser.add_argument("--order",nargs ='+', default =[])
-	parser.add_argument("--color", default="no")
+	parser.add_argument("--order",nargs = '+', default =[])
+	parser.add_argument("--color", default = "yes")
 	args = parser.parse_args()
 	# Storing the values in the respective variables.
 	filepath = args.filepath
 	pdf = args.pdf 
 	order = args.order
 	color = args.color
-
-	csv_column = csv_column_reader(filepath)
-
-
-
 	dicti = csv_reader(filepath)
-	plotter(dicti, pdf, color)
-
-	
-
+	csv_columns = csv_column_reader(filepath)
+	items_in_csv = []
+	for i in dicti:
+		items_in_csv.append(i)
+	if set(order) == set(items_in_csv) and len(items_in_csv) == len(order):
+		plotter(dicti,csv_columns, pdf, color, order)
+	elif len(order) == 0:
+		plotter(dicti,csv_columns, pdf, color, items_in_csv)
+	else:
+		print "\n <ERROR> Either length of the order arguments is not 3 or they are not in the csv file"
+		print "Please select the order from among the items in following list:"
+		print items_in_csv
+		print "\n"
 
 if __name__ == "__main__":
 	argument_parser()
