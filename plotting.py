@@ -98,8 +98,8 @@ def plotter(dictionary,csv_columns, pdf_file_name, color_flag, order):
 		paper_list_for_legend.append(i)
 	
 	# X and Y Labels
-	plt.ylabel(csv_columns[2],fontsize=20, fontstyle= 'italic')
-	plt.xlabel(csv_columns[1] ,fontsize=17, fontstyle= 'italic')
+	plt.ylabel(csv_columns[2],fontsize=22, fontstyle= 'italic')
+	plt.xlabel(csv_columns[1] ,fontsize=22, fontstyle= 'italic')
 
 
 
@@ -107,6 +107,8 @@ def plotter(dictionary,csv_columns, pdf_file_name, color_flag, order):
 	if len(years_for_xticks) >= 21:
 		for i in range(1,len(years_for_xticks), 2):
 			years_for_xticks[i]=' '
+	
+	#X and Y Ticks 
 	plt.xticks(ind + width / 2., years_for_xticks, rotation = 75,fontsize=20)
 	plt.yticks(np.arange(0, max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/5 , max(total_number_of_papers_in_a_year)/10), fontsize=19)
 	
