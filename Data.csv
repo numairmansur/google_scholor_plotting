@@ -1,12 +1,12 @@
-paper,year,citations
-ParamILS (Hutter et  al.2009),2008,2
-ParamILS (Hutter et  al.2009),2009,11
-ParamILS (Hutter et  al.2009),2010,28
-ParamILS (Hutter et  al.2009),2011,58
-ParamILS (Hutter et  al.2009),2012,55
-ParamILS (Hutter et  al.2009),2013,79
-ParamILS (Hutter et  al.2009),2014,91
-ParamILS (Hutter et  al.2009),2015,90
+paper,year,#citations
+ParamILS (Hutter et  al. 09),2008,2
+ParamILS (Hutter et  al. 09),2009,11
+ParamILS (Hutter et  al. 09),2010,28
+ParamILS (Hutter et  al. 09),2011,58
+ParamILS (Hutter et  al. 09),2012,55
+ParamILS (Hutter et  al. 09),2013,79
+ParamILS (Hutter et  al. 09),2014,91
+ParamILS (Hutter et  al. 09),2015,90
 SMAC(Hutter et al. 11),2010,1
 SMAC(Hutter et al. 11),2011,5
 SMAC(Hutter et al. 11),2012,15

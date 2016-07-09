@@ -1,5 +1,5 @@
 '''
-Author: Muhammad Numair Mansur (numair.mansur@gmail.com)
+@author: numair mansur (numair.mansur@gmail.com)
 
 Research Group on Learning, Optimization,
 and Automated Algorithm Design
@@ -51,7 +51,7 @@ def csv_reader(filepath):
 
 
 
-def plotter(dictionary,csv_columns, pdf_file_name, color_flag, order):
+def plotter(dictionary,csv_columns, pdf_file_name, color_flag, order,y_max,y_increment):
 	'''
 	Produces a plot
 	'''
@@ -110,8 +110,12 @@ def plotter(dictionary,csv_columns, pdf_file_name, color_flag, order):
 	
 	#X and Y Ticks 
 	plt.xticks(ind + width / 2., years_for_xticks, rotation = 75,fontsize=20)
-	plt.yticks(np.arange(0, max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/5 , max(total_number_of_papers_in_a_year)/10), fontsize=19)
+	plt.yticks(np.arange(0, max(total_number_of_papers_in_a_year) + max(total_number_of_papers_in_a_year)/5 if y_max == None else int(y_max)+1,
+		int(y_increment)),
+		fontsize=19)
 	
+	y_max
+
 	#Reverse the legend order
 	bars= list(reversed(bars))
 	paper_list_for_legend = list(reversed(paper_list_for_legend))
@@ -135,21 +139,26 @@ def main():
 	parser.add_argument("--pdf", default = "plot", help='Name of the pdf file')
 	parser.add_argument("--order",nargs = '+', default =[])
 	parser.add_argument("--color", default = "yes")
+	parser.add_argument("--y_max", default = None)
+	parser.add_argument("--y_increment", default=50)
 	args = parser.parse_args()
 	# Storing the values in the respective variables.
 	filepath = args.filepath
 	pdf = args.pdf 
 	order = args.order
 	color = args.color
+	y_max = args.y_max
+	y_increment = args.y_increment
+
 	dicti = csv_reader(filepath)
 	csv_columns = csv_column_reader(filepath)
 	items_in_csv = []
 	for i in dicti:
 		items_in_csv.append(i)
 	if set(order) == set(items_in_csv) and len(items_in_csv) == len(order):
-		plotter(dicti,csv_columns, pdf, color, order)
+		plotter(dicti,csv_columns, pdf, color, order,y_max,y_increment)
 	elif len(order) == 0:
-		plotter(dicti,csv_columns, pdf, color, items_in_csv)
+		plotter(dicti,csv_columns, pdf, color, items_in_csv,y_max,y_increment)
 	else:
 		print "\n <ERROR> Either length of the order arguments is not 3 or they are not in the csv file"
 		print "Please select the order from among the items in following list:"
